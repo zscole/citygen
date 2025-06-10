@@ -8,10 +8,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-int SEGMENT_LIMIT = 2048;
 #define MAX_SEGMENTS 4096
 #define MAX_QUEUE 2048
-#define MAX_NEIGHBORS 32
+#define MAX_BRANCHES 4
 
 typedef struct {
     Segment* segment;
@@ -24,11 +23,7 @@ static int segment_count = 0;
 static QueueItem queue[MAX_QUEUE];
 static int queue_size = 0;
 
-static int compare_queue(const void* a, const void* b) {
-    double ta = ((QueueItem*)a)->t;
-    double tb = ((QueueItem*)b)->t;
-    return (ta > tb) - (ta < tb);
-}
+int SEGMENT_LIMIT = 2048;
 
 static void enqueue(Segment* s, double t) {
     if (queue_size < MAX_QUEUE) {
@@ -40,8 +35,17 @@ static void enqueue(Segment* s, double t) {
 
 static Segment* dequeue() {
     if (queue_size == 0) return NULL;
-    qsort(queue, queue_size, sizeof(QueueItem), compare_queue);
-    return queue[--queue_size].segment;
+    int min_i = 0;
+    double min_t = queue[0].t;
+    for (int i = 1; i < queue_size; ++i) {
+        if (queue[i].t < min_t) {
+            min_i = i;
+            min_t = queue[i].t;
+        }
+    }
+    Segment* result = queue[min_i].segment;
+    queue[min_i] = queue[--queue_size];
+    return result;
 }
 
 static void add_segment(Segment* s) {
@@ -53,56 +57,70 @@ static void add_segment(Segment* s) {
 static int too_close(Point a, Point b) {
     double dx = a.x - b.x;
     double dy = a.y - b.y;
-    return dx * dx + dy * dy < (SNAP_DISTANCE * SNAP_DISTANCE);
+    return dx * dx + dy * dy < SNAP_DISTANCE * SNAP_DISTANCE;
 }
 
 static int local_constraints(Segment* s) {
     for (int i = 0; i < segment_count; ++i) {
         Segment* other = segments[i];
         if (too_close(s->end, other->end)) {
-            s->end = other->end; // snap to endpoint
+            s->end = other->end;
             return 1;
         }
     }
     return 1;
 }
 
-static double population_density(Point p) {
-    double x = p.x / 1000.0;
-    double y = p.y / 1000.0;
-    double v = fake_noise(x, y);
-    return (v + 1.0) * 0.5;
-}
-
 static void global_goals(Segment* s, Segment** out, int* out_count) {
     double base_dir = atan2(s->end.y - s->start.y, s->end.x - s->start.x);
-    double pop = population_density(s->end);
+    double pop = population_noise(s->end.x / 1000.0, s->end.y / 1000.0);
     *out_count = 0;
 
     Point start = s->end;
     double length = s->highway ? HIGHWAY_SEGMENT_LENGTH : SEGMENT_LENGTH;
-    double deviation = 0.15; // ~8.5 degrees
+    double deviation = 0.1;
 
-    out[(*out_count)++] = segment_create(start, (Point){
-        start.x + length * cos(base_dir + deviation),
-        start.y + length * sin(base_dir + deviation)
+    // Always continue straight
+    Segment* forward = segment_create(start, (Point){
+        start.x + length * cos(base_dir),
+        start.y + length * sin(base_dir)
     }, s->highway, segment_count + *out_count);
+    out[(*out_count)++] = forward;
 
-    out[(*out_count)++] = segment_create(start, (Point){
-        start.x + length * cos(base_dir - deviation),
-        start.y + length * sin(base_dir - deviation)
-    }, s->highway, segment_count + *out_count);
-
-    if (!s->highway && pop > 0.5) {
-        out[(*out_count)++] = segment_create(start, (Point){
-            start.x + length * cos(base_dir + 0.5),
-            start.y + length * sin(base_dir + 0.5)
-        }, 0, segment_count + *out_count);
-
-        out[(*out_count)++] = segment_create(start, (Point){
-            start.x + length * cos(base_dir - 0.5),
-            start.y + length * sin(base_dir - 0.5)
-        }, 0, segment_count + *out_count);
+    if (s->highway) {
+        if (pop > 0.6) {
+            if ((rand() % 100) < (HIGHWAY_BRANCH_PROBABILITY * 100)) {
+                Segment* left = segment_create(start, (Point){
+                    start.x + length * cos(base_dir - M_PI / 4.0 + deviation),
+                    start.y + length * sin(base_dir - M_PI / 4.0 + deviation)
+                }, 0, segment_count + *out_count);
+                out[(*out_count)++] = left;
+            }
+            if ((rand() % 100) < (HIGHWAY_BRANCH_PROBABILITY * 100)) {
+                Segment* right = segment_create(start, (Point){
+                    start.x + length * cos(base_dir + M_PI / 4.0 - deviation),
+                    start.y + length * sin(base_dir + M_PI / 4.0 - deviation)
+                }, 0, segment_count + *out_count);
+                out[(*out_count)++] = right;
+            }
+        }
+    } else {
+        if (pop > 0.4) {
+            if ((rand() % 100) < (DEFAULT_BRANCH_PROBABILITY * 100)) {
+                Segment* left = segment_create(start, (Point){
+                    start.x + length * cos(base_dir - M_PI / 4.0 + deviation),
+                    start.y + length * sin(base_dir - M_PI / 4.0 + deviation)
+                }, 0, segment_count + *out_count);
+                out[(*out_count)++] = left;
+            }
+            if ((rand() % 100) < (DEFAULT_BRANCH_PROBABILITY * 100)) {
+                Segment* right = segment_create(start, (Point){
+                    start.x + length * cos(base_dir + M_PI / 4.0 - deviation),
+                    start.y + length * sin(base_dir + M_PI / 4.0 - deviation)
+                }, 0, segment_count + *out_count);
+                out[(*out_count)++] = right;
+            }
+        }
     }
 }
 
@@ -120,9 +138,8 @@ void full_generate_city(void) {
 
         if (local_constraints(current)) {
             add_segment(current);
-            for (int i = 0; i < current->connection_count; ++i) segment_add_connection(current->connections[i], current);
 
-            Segment* branches[8];
+            Segment* branches[MAX_BRANCHES];
             int branch_count = 0;
             global_goals(current, branches, &branch_count);
 

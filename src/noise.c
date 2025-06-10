@@ -2,6 +2,9 @@
 #include "noise.h"
 #include <math.h>
 
-double fake_noise(double x, double y) {
-    return fmod(sin(x * 12.9898 + y * 78.233) * 43758.5453, 1.0);
+#define STB_PERLIN_IMPLEMENTATION
+#include "stb_perlin.h"
+
+double population_noise(double x, double y) {
+    return stb_perlin_fbm_noise3((float)x, (float)y, 0.0f, 2.0f, 0.5f, 6);
 }
