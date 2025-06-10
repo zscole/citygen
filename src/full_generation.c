@@ -72,30 +72,64 @@ static int local_constraints(Segment* s) {
 }
 
 static void global_goals(Segment* s, Segment** out, int* out_count) {
-    double base_dir = atan2(s->end.y - s->start.y, s->end.x - s->start.x);
     *out_count = 0;
 
-    Point start = s->end;
-    double length = s->highway ? HIGHWAY_SEGMENT_LENGTH : SEGMENT_LENGTH;
+    double dir = atan2(s->end.y - s->start.y, s->end.x - s->start.x);
+    Point origin = s->end;
+    double pop = population_noise(origin.x / 1000.0, origin.y / 1000.0);
     double deviation = 0.15;
+    double length = s->highway ? HIGHWAY_SEGMENT_LENGTH : SEGMENT_LENGTH;
 
-    Segment* forward = segment_create(start, (Point){
-        start.x + length * cos(base_dir),
-        start.y + length * sin(base_dir)
+    Segment* straight = segment_create(origin, (Point){
+        origin.x + length * cos(dir),
+        origin.y + length * sin(dir)
     }, s->highway, segment_count + *out_count);
-    out[(*out_count)++] = forward;
+    out[(*out_count)++] = straight;
 
-    Segment* left = segment_create(start, (Point){
-        start.x + length * cos(base_dir - M_PI / 4.0 + deviation),
-        start.y + length * sin(base_dir - M_PI / 4.0 + deviation)
-    }, 0, segment_count + *out_count);
-    out[(*out_count)++] = left;
+    if (s->highway) {
+        double rand_angle = dir + ((rand() % 200 - 100) / 100.0) * deviation;
+        Segment* randomStraight = segment_create(origin, (Point){
+            origin.x + length * cos(rand_angle),
+            origin.y + length * sin(rand_angle)
+        }, 1, segment_count + *out_count);
+        double pop_random = population_noise(randomStraight->end.x / 1000.0, randomStraight->end.y / 1000.0);
+        if (pop_random > pop) {
+            out[(*out_count) - 1] = randomStraight;
+        }
 
-    Segment* right = segment_create(start, (Point){
-        start.x + length * cos(base_dir + M_PI / 4.0 - deviation),
-        start.y + length * sin(base_dir + M_PI / 4.0 - deviation)
-    }, 0, segment_count + *out_count);
-    out[(*out_count)++] = right;
+        double chosen_pop = population_noise(out[(*out_count) - 1]->end.x / 1000.0, out[(*out_count) - 1]->end.y / 1000.0);
+        if (chosen_pop > 0.6) {
+            if ((rand() % 100) < (HIGHWAY_BRANCH_PROBABILITY * 100)) {
+                Segment* left = segment_create(origin, (Point){
+                    origin.x + length * cos(dir - M_PI / 2.0 + deviation),
+                    origin.y + length * sin(dir - M_PI / 2.0 + deviation)
+                }, 0, segment_count + *out_count);
+                out[(*out_count)++] = left;
+            }
+            if ((rand() % 100) < (HIGHWAY_BRANCH_PROBABILITY * 100)) {
+                Segment* right = segment_create(origin, (Point){
+                    origin.x + length * cos(dir + M_PI / 2.0 - deviation),
+                    origin.y + length * sin(dir + M_PI / 2.0 - deviation)
+                }, 0, segment_count + *out_count);
+                out[(*out_count)++] = right;
+            }
+        }
+    } else if (pop > 0.4) {
+        if ((rand() % 100) < (DEFAULT_BRANCH_PROBABILITY * 100)) {
+            Segment* left = segment_create(origin, (Point){
+                origin.x + length * cos(dir - M_PI / 2.0 + deviation),
+                origin.y + length * sin(dir - M_PI / 2.0 + deviation)
+            }, 0, segment_count + *out_count);
+            out[(*out_count)++] = left;
+        }
+        if ((rand() % 100) < (DEFAULT_BRANCH_PROBABILITY * 100)) {
+            Segment* right = segment_create(origin, (Point){
+                origin.x + length * cos(dir + M_PI / 2.0 - deviation),
+                origin.y + length * sin(dir + M_PI / 2.0 - deviation)
+            }, 0, segment_count + *out_count);
+            out[(*out_count)++] = right;
+        }
+    }
 }
 
 void full_generate_city(void) {
@@ -119,7 +153,18 @@ void full_generate_city(void) {
 
             for (int i = 0; i < branch_count; ++i) {
                 segment_add_connection(current, branches[i]);
-                enqueue(branches[i], current->id + 1);
+            }
+
+            for (int i = 0; i < branch_count; ++i) {
+                if (branches[i]->highway) {
+                    enqueue(branches[i], current->id + 1);
+                }
+            }
+
+            for (int i = 0; i < branch_count; ++i) {
+                if (!branches[i]->highway) {
+                    enqueue(branches[i], current->id + 1);
+                }
             }
         } else {
             free(current);
