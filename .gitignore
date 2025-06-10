@@ -1,0 +1,28 @@
+# Build directory
+/build/
+/CMakeFiles/
+/CMakeCache.txt
+/Makefile
+/citygen
+
+# Editor files
+*.swp
+*.swo
+*.log
+*.DS_Store
+
+# Compilation artifacts
+*.o
+*.obj
+*.so
+*.a
+*.out
+*.exe
+
+# Backup files
+*~
+*.bak
+
+# VSCode/Cursor
+.vscode/
+cursor.json
