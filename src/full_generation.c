@@ -73,55 +73,29 @@ static int local_constraints(Segment* s) {
 
 static void global_goals(Segment* s, Segment** out, int* out_count) {
     double base_dir = atan2(s->end.y - s->start.y, s->end.x - s->start.x);
-    double pop = population_noise(s->end.x / 1000.0, s->end.y / 1000.0);
     *out_count = 0;
 
     Point start = s->end;
     double length = s->highway ? HIGHWAY_SEGMENT_LENGTH : SEGMENT_LENGTH;
-    double deviation = 0.1;
+    double deviation = 0.15;
 
-    // Always continue straight
     Segment* forward = segment_create(start, (Point){
         start.x + length * cos(base_dir),
         start.y + length * sin(base_dir)
     }, s->highway, segment_count + *out_count);
     out[(*out_count)++] = forward;
 
-    if (s->highway) {
-        if (pop > 0.6) {
-            if ((rand() % 100) < (HIGHWAY_BRANCH_PROBABILITY * 100)) {
-                Segment* left = segment_create(start, (Point){
-                    start.x + length * cos(base_dir - M_PI / 4.0 + deviation),
-                    start.y + length * sin(base_dir - M_PI / 4.0 + deviation)
-                }, 0, segment_count + *out_count);
-                out[(*out_count)++] = left;
-            }
-            if ((rand() % 100) < (HIGHWAY_BRANCH_PROBABILITY * 100)) {
-                Segment* right = segment_create(start, (Point){
-                    start.x + length * cos(base_dir + M_PI / 4.0 - deviation),
-                    start.y + length * sin(base_dir + M_PI / 4.0 - deviation)
-                }, 0, segment_count + *out_count);
-                out[(*out_count)++] = right;
-            }
-        }
-    } else {
-        if (pop > 0.4) {
-            if ((rand() % 100) < (DEFAULT_BRANCH_PROBABILITY * 100)) {
-                Segment* left = segment_create(start, (Point){
-                    start.x + length * cos(base_dir - M_PI / 4.0 + deviation),
-                    start.y + length * sin(base_dir - M_PI / 4.0 + deviation)
-                }, 0, segment_count + *out_count);
-                out[(*out_count)++] = left;
-            }
-            if ((rand() % 100) < (DEFAULT_BRANCH_PROBABILITY * 100)) {
-                Segment* right = segment_create(start, (Point){
-                    start.x + length * cos(base_dir + M_PI / 4.0 - deviation),
-                    start.y + length * sin(base_dir + M_PI / 4.0 - deviation)
-                }, 0, segment_count + *out_count);
-                out[(*out_count)++] = right;
-            }
-        }
-    }
+    Segment* left = segment_create(start, (Point){
+        start.x + length * cos(base_dir - M_PI / 4.0 + deviation),
+        start.y + length * sin(base_dir - M_PI / 4.0 + deviation)
+    }, 0, segment_count + *out_count);
+    out[(*out_count)++] = left;
+
+    Segment* right = segment_create(start, (Point){
+        start.x + length * cos(base_dir + M_PI / 4.0 - deviation),
+        start.y + length * sin(base_dir + M_PI / 4.0 - deviation)
+    }, 0, segment_count + *out_count);
+    out[(*out_count)++] = right;
 }
 
 void full_generate_city(void) {
