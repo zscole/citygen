@@ -1,0 +1,3 @@
+/Users/zak/Downloads/citygen_compile/build/CMakeFiles/citygen.dir
+/Users/zak/Downloads/citygen_compile/build/CMakeFiles/edit_cache.dir
+/Users/zak/Downloads/citygen_compile/build/CMakeFiles/rebuild_cache.dir
