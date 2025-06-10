@@ -9,13 +9,14 @@ Segment* segment_create(Point start, Point end, int highway, int id) {
     s->start = start;
     s->end = end;
     s->id = id;
-    s->highway = highway;
-    s->connections = NULL;
-    s->connection_count = 0;
+    s->highway = highway;  // Correctly use the parameter
 
     double dx = end.x - start.x;
     double dy = end.y - start.y;
     s->length = sqrt(dx * dx + dy * dy);
+
+    s->connections = NULL;
+    s->connection_count = 0;
 
     return s;
 }

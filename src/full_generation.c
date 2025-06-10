@@ -76,7 +76,7 @@ static void global_goals(Segment* s, Segment** out, int* out_count) {
 
     double dir = atan2(s->end.y - s->start.y, s->end.x - s->start.x);
     Point origin = s->end;
-    double pop = population_noise(origin.x / 1000.0, origin.y / 1000.0);
+    double base_pop = population_noise(origin.x / 1000.0, origin.y / 1000.0);
     double deviation = 0.15;
     double length = s->highway ? HIGHWAY_SEGMENT_LENGTH : SEGMENT_LENGTH;
 
@@ -84,37 +84,37 @@ static void global_goals(Segment* s, Segment** out, int* out_count) {
         origin.x + length * cos(dir),
         origin.y + length * sin(dir)
     }, s->highway, segment_count + *out_count);
-    out[(*out_count)++] = straight;
 
-    if (s->highway) {
-        double rand_angle = dir + ((rand() % 200 - 100) / 100.0) * deviation;
-        Segment* randomStraight = segment_create(origin, (Point){
-            origin.x + length * cos(rand_angle),
-            origin.y + length * sin(rand_angle)
-        }, 1, segment_count + *out_count);
-        double pop_random = population_noise(randomStraight->end.x / 1000.0, randomStraight->end.y / 1000.0);
-        if (pop_random > pop) {
-            out[(*out_count) - 1] = randomStraight;
-        }
+    double rand_angle = dir + ((rand() % 200 - 100) / 100.0) * deviation;
+    Segment* randomStraight = segment_create(origin, (Point){
+        origin.x + length * cos(rand_angle),
+        origin.y + length * sin(rand_angle)
+    }, s->highway, segment_count + *out_count);
 
-        double chosen_pop = population_noise(out[(*out_count) - 1]->end.x / 1000.0, out[(*out_count) - 1]->end.y / 1000.0);
-        if (chosen_pop > 0.6) {
-            if ((rand() % 100) < (HIGHWAY_BRANCH_PROBABILITY * 100)) {
-                Segment* left = segment_create(origin, (Point){
-                    origin.x + length * cos(dir - M_PI / 2.0 + deviation),
-                    origin.y + length * sin(dir - M_PI / 2.0 + deviation)
-                }, 0, segment_count + *out_count);
-                out[(*out_count)++] = left;
-            }
-            if ((rand() % 100) < (HIGHWAY_BRANCH_PROBABILITY * 100)) {
-                Segment* right = segment_create(origin, (Point){
-                    origin.x + length * cos(dir + M_PI / 2.0 - deviation),
-                    origin.y + length * sin(dir + M_PI / 2.0 - deviation)
-                }, 0, segment_count + *out_count);
-                out[(*out_count)++] = right;
-            }
+    double pop_straight = population_noise(straight->end.x / 1000.0, straight->end.y / 1000.0);
+    double pop_random = population_noise(randomStraight->end.x / 1000.0, randomStraight->end.y / 1000.0);
+
+    Segment* chosen = (pop_random > pop_straight) ? randomStraight : straight;
+    out[(*out_count)++] = chosen;
+
+    double chosen_pop = population_noise(chosen->end.x / 1000.0, chosen->end.y / 1000.0);
+
+    if (s->highway && chosen_pop > 0.6) {
+        if ((rand() % 100) < (HIGHWAY_BRANCH_PROBABILITY * 100)) {
+            Segment* left = segment_create(origin, (Point){
+                origin.x + length * cos(dir - M_PI / 2.0 + deviation),
+                origin.y + length * sin(dir - M_PI / 2.0 + deviation)
+            }, 0, segment_count + *out_count);
+            out[(*out_count)++] = left;
         }
-    } else if (pop > 0.4) {
+        if ((rand() % 100) < (HIGHWAY_BRANCH_PROBABILITY * 100)) {
+            Segment* right = segment_create(origin, (Point){
+                origin.x + length * cos(dir + M_PI / 2.0 - deviation),
+                origin.y + length * sin(dir + M_PI / 2.0 - deviation)
+            }, 0, segment_count + *out_count);
+            out[(*out_count)++] = right;
+        }
+    } else if (!s->highway && base_pop > 0.4) {
         if ((rand() % 100) < (DEFAULT_BRANCH_PROBABILITY * 100)) {
             Segment* left = segment_create(origin, (Point){
                 origin.x + length * cos(dir - M_PI / 2.0 + deviation),
