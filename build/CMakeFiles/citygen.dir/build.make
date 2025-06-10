@@ -86,10 +86,24 @@ CMakeFiles/citygen.dir/src/config.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/citygen.dir/src/config.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/zak/Downloads/citygen_compile/src/config.c -o CMakeFiles/citygen.dir/src/config.c.s
 
+CMakeFiles/citygen.dir/src/full_generation.c.o: CMakeFiles/citygen.dir/flags.make
+CMakeFiles/citygen.dir/src/full_generation.c.o: /Users/zak/Downloads/citygen_compile/src/full_generation.c
+CMakeFiles/citygen.dir/src/full_generation.c.o: CMakeFiles/citygen.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/zak/Downloads/citygen_compile/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/citygen.dir/src/full_generation.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/citygen.dir/src/full_generation.c.o -MF CMakeFiles/citygen.dir/src/full_generation.c.o.d -o CMakeFiles/citygen.dir/src/full_generation.c.o -c /Users/zak/Downloads/citygen_compile/src/full_generation.c
+
+CMakeFiles/citygen.dir/src/full_generation.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/citygen.dir/src/full_generation.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/zak/Downloads/citygen_compile/src/full_generation.c > CMakeFiles/citygen.dir/src/full_generation.c.i
+
+CMakeFiles/citygen.dir/src/full_generation.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/citygen.dir/src/full_generation.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/zak/Downloads/citygen_compile/src/full_generation.c -o CMakeFiles/citygen.dir/src/full_generation.c.s
+
 CMakeFiles/citygen.dir/src/generation.c.o: CMakeFiles/citygen.dir/flags.make
 CMakeFiles/citygen.dir/src/generation.c.o: /Users/zak/Downloads/citygen_compile/src/generation.c
 CMakeFiles/citygen.dir/src/generation.c.o: CMakeFiles/citygen.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/zak/Downloads/citygen_compile/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/citygen.dir/src/generation.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/zak/Downloads/citygen_compile/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/citygen.dir/src/generation.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/citygen.dir/src/generation.c.o -MF CMakeFiles/citygen.dir/src/generation.c.o.d -o CMakeFiles/citygen.dir/src/generation.c.o -c /Users/zak/Downloads/citygen_compile/src/generation.c
 
 CMakeFiles/citygen.dir/src/generation.c.i: cmake_force
@@ -103,7 +117,7 @@ CMakeFiles/citygen.dir/src/generation.c.s: cmake_force
 CMakeFiles/citygen.dir/src/math_utils.c.o: CMakeFiles/citygen.dir/flags.make
 CMakeFiles/citygen.dir/src/math_utils.c.o: /Users/zak/Downloads/citygen_compile/src/math_utils.c
 CMakeFiles/citygen.dir/src/math_utils.c.o: CMakeFiles/citygen.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/zak/Downloads/citygen_compile/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/citygen.dir/src/math_utils.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/zak/Downloads/citygen_compile/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/citygen.dir/src/math_utils.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/citygen.dir/src/math_utils.c.o -MF CMakeFiles/citygen.dir/src/math_utils.c.o.d -o CMakeFiles/citygen.dir/src/math_utils.c.o -c /Users/zak/Downloads/citygen_compile/src/math_utils.c
 
 CMakeFiles/citygen.dir/src/math_utils.c.i: cmake_force
@@ -117,7 +131,7 @@ CMakeFiles/citygen.dir/src/math_utils.c.s: cmake_force
 CMakeFiles/citygen.dir/src/noise.c.o: CMakeFiles/citygen.dir/flags.make
 CMakeFiles/citygen.dir/src/noise.c.o: /Users/zak/Downloads/citygen_compile/src/noise.c
 CMakeFiles/citygen.dir/src/noise.c.o: CMakeFiles/citygen.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/zak/Downloads/citygen_compile/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/citygen.dir/src/noise.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/zak/Downloads/citygen_compile/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/citygen.dir/src/noise.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/citygen.dir/src/noise.c.o -MF CMakeFiles/citygen.dir/src/noise.c.o.d -o CMakeFiles/citygen.dir/src/noise.c.o -c /Users/zak/Downloads/citygen_compile/src/noise.c
 
 CMakeFiles/citygen.dir/src/noise.c.i: cmake_force
@@ -131,7 +145,7 @@ CMakeFiles/citygen.dir/src/noise.c.s: cmake_force
 CMakeFiles/citygen.dir/src/quadtree.c.o: CMakeFiles/citygen.dir/flags.make
 CMakeFiles/citygen.dir/src/quadtree.c.o: /Users/zak/Downloads/citygen_compile/src/quadtree.c
 CMakeFiles/citygen.dir/src/quadtree.c.o: CMakeFiles/citygen.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/zak/Downloads/citygen_compile/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/citygen.dir/src/quadtree.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/zak/Downloads/citygen_compile/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/citygen.dir/src/quadtree.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/citygen.dir/src/quadtree.c.o -MF CMakeFiles/citygen.dir/src/quadtree.c.o.d -o CMakeFiles/citygen.dir/src/quadtree.c.o -c /Users/zak/Downloads/citygen_compile/src/quadtree.c
 
 CMakeFiles/citygen.dir/src/quadtree.c.i: cmake_force
@@ -145,7 +159,7 @@ CMakeFiles/citygen.dir/src/quadtree.c.s: cmake_force
 CMakeFiles/citygen.dir/src/segment.c.o: CMakeFiles/citygen.dir/flags.make
 CMakeFiles/citygen.dir/src/segment.c.o: /Users/zak/Downloads/citygen_compile/src/segment.c
 CMakeFiles/citygen.dir/src/segment.c.o: CMakeFiles/citygen.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/zak/Downloads/citygen_compile/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/citygen.dir/src/segment.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/zak/Downloads/citygen_compile/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/citygen.dir/src/segment.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/citygen.dir/src/segment.c.o -MF CMakeFiles/citygen.dir/src/segment.c.o.d -o CMakeFiles/citygen.dir/src/segment.c.o -c /Users/zak/Downloads/citygen_compile/src/segment.c
 
 CMakeFiles/citygen.dir/src/segment.c.i: cmake_force
@@ -159,7 +173,7 @@ CMakeFiles/citygen.dir/src/segment.c.s: cmake_force
 CMakeFiles/citygen.dir/examples/main.c.o: CMakeFiles/citygen.dir/flags.make
 CMakeFiles/citygen.dir/examples/main.c.o: /Users/zak/Downloads/citygen_compile/examples/main.c
 CMakeFiles/citygen.dir/examples/main.c.o: CMakeFiles/citygen.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/zak/Downloads/citygen_compile/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/citygen.dir/examples/main.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/zak/Downloads/citygen_compile/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/citygen.dir/examples/main.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/citygen.dir/examples/main.c.o -MF CMakeFiles/citygen.dir/examples/main.c.o.d -o CMakeFiles/citygen.dir/examples/main.c.o -c /Users/zak/Downloads/citygen_compile/examples/main.c
 
 CMakeFiles/citygen.dir/examples/main.c.i: cmake_force
@@ -173,6 +187,7 @@ CMakeFiles/citygen.dir/examples/main.c.s: cmake_force
 # Object files for target citygen
 citygen_OBJECTS = \
 "CMakeFiles/citygen.dir/src/config.c.o" \
+"CMakeFiles/citygen.dir/src/full_generation.c.o" \
 "CMakeFiles/citygen.dir/src/generation.c.o" \
 "CMakeFiles/citygen.dir/src/math_utils.c.o" \
 "CMakeFiles/citygen.dir/src/noise.c.o" \
@@ -184,6 +199,7 @@ citygen_OBJECTS = \
 citygen_EXTERNAL_OBJECTS =
 
 citygen: CMakeFiles/citygen.dir/src/config.c.o
+citygen: CMakeFiles/citygen.dir/src/full_generation.c.o
 citygen: CMakeFiles/citygen.dir/src/generation.c.o
 citygen: CMakeFiles/citygen.dir/src/math_utils.c.o
 citygen: CMakeFiles/citygen.dir/src/noise.c.o
@@ -192,7 +208,7 @@ citygen: CMakeFiles/citygen.dir/src/segment.c.o
 citygen: CMakeFiles/citygen.dir/examples/main.c.o
 citygen: CMakeFiles/citygen.dir/build.make
 citygen: CMakeFiles/citygen.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/zak/Downloads/citygen_compile/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking C executable citygen"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/zak/Downloads/citygen_compile/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking C executable citygen"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/citygen.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

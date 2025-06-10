@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/citygen.dir/examples/main.c.o.d"
   "CMakeFiles/citygen.dir/src/config.c.o"
   "CMakeFiles/citygen.dir/src/config.c.o.d"
+  "CMakeFiles/citygen.dir/src/full_generation.c.o"
+  "CMakeFiles/citygen.dir/src/full_generation.c.o.d"
   "CMakeFiles/citygen.dir/src/generation.c.o"
   "CMakeFiles/citygen.dir/src/generation.c.o.d"
   "CMakeFiles/citygen.dir/src/math_utils.c.o"

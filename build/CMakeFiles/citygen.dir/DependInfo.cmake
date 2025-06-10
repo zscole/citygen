@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/zak/Downloads/citygen_compile/examples/main.c" "CMakeFiles/citygen.dir/examples/main.c.o" "gcc" "CMakeFiles/citygen.dir/examples/main.c.o.d"
   "/Users/zak/Downloads/citygen_compile/src/config.c" "CMakeFiles/citygen.dir/src/config.c.o" "gcc" "CMakeFiles/citygen.dir/src/config.c.o.d"
+  "/Users/zak/Downloads/citygen_compile/src/full_generation.c" "CMakeFiles/citygen.dir/src/full_generation.c.o" "gcc" "CMakeFiles/citygen.dir/src/full_generation.c.o.d"
   "/Users/zak/Downloads/citygen_compile/src/generation.c" "CMakeFiles/citygen.dir/src/generation.c.o" "gcc" "CMakeFiles/citygen.dir/src/generation.c.o.d"
   "/Users/zak/Downloads/citygen_compile/src/math_utils.c" "CMakeFiles/citygen.dir/src/math_utils.c.o" "gcc" "CMakeFiles/citygen.dir/src/math_utils.c.o.d"
   "/Users/zak/Downloads/citygen_compile/src/noise.c" "CMakeFiles/citygen.dir/src/noise.c.o" "gcc" "CMakeFiles/citygen.dir/src/noise.c.o.d"

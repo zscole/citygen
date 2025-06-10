@@ -177,6 +177,30 @@ src/config.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/citygen.dir/build.make CMakeFiles/citygen.dir/src/config.c.s
 .PHONY : src/config.c.s
 
+src/full_generation.o: src/full_generation.c.o
+.PHONY : src/full_generation.o
+
+# target to build an object file
+src/full_generation.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/citygen.dir/build.make CMakeFiles/citygen.dir/src/full_generation.c.o
+.PHONY : src/full_generation.c.o
+
+src/full_generation.i: src/full_generation.c.i
+.PHONY : src/full_generation.i
+
+# target to preprocess a source file
+src/full_generation.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/citygen.dir/build.make CMakeFiles/citygen.dir/src/full_generation.c.i
+.PHONY : src/full_generation.c.i
+
+src/full_generation.s: src/full_generation.c.s
+.PHONY : src/full_generation.s
+
+# target to generate assembly for a file
+src/full_generation.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/citygen.dir/build.make CMakeFiles/citygen.dir/src/full_generation.c.s
+.PHONY : src/full_generation.c.s
+
 src/generation.o: src/generation.c.o
 .PHONY : src/generation.o
 
@@ -312,6 +336,9 @@ help:
 	@echo "... src/config.o"
 	@echo "... src/config.i"
 	@echo "... src/config.s"
+	@echo "... src/full_generation.o"
+	@echo "... src/full_generation.i"
+	@echo "... src/full_generation.s"
 	@echo "... src/generation.o"
 	@echo "... src/generation.i"
 	@echo "... src/generation.s"
